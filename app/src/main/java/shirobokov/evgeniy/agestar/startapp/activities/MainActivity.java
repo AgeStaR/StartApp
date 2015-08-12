@@ -4,7 +4,14 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.unnamed.b.atv.model.TreeNode;
+import com.unnamed.b.atv.view.AndroidTreeView;
 
 import shirobokov.evgeniy.agestar.startapp.R;
 import shirobokov.evgeniy.agestar.startapp.rest.RestRequestTreeTask;
@@ -17,6 +24,22 @@ public class MainActivity extends Activity {
         new RestRequestTreeTask(this).execute();
         TextView text = (TextView) findViewById(R.id.content_label);
         text.setText("50");
+
+        TreeNode root = TreeNode.root();
+        TreeNode parent = new TreeNode("MyParentNode");
+        TreeNode child0 = new TreeNode("ChildNode0");
+        TreeNode child1 = new TreeNode("ChildNode1");
+
+        parent.addChildren(child0, child1);
+        root.addChild(parent);
+
+        AndroidTreeView tView = new AndroidTreeView(this, root);
+        tView.setDefaultAnimation(true);
+        tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
+
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.menu_layout);
+
+        layout.addView(tView.getView());
     }
 
     @Override
