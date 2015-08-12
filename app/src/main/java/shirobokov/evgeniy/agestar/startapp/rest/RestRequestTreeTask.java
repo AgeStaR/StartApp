@@ -13,6 +13,7 @@ import java.util.List;
 
 import shirobokov.evgeniy.agestar.startapp.R;
 import shirobokov.evgeniy.agestar.startapp.activities.MainActivity;
+import shirobokov.evgeniy.agestar.startapp.converters.CollectionConverter;
 import shirobokov.evgeniy.agestar.startapp.models.Tree;
 
 /**
@@ -48,9 +49,14 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, Tree[]> {
     }
 
     @Override
-    protected void onPostExecute(Tree[] tree) {
-        super.onPostExecute(tree);
+    protected void onPostExecute(Tree[] treeArray) {
+        super.onPostExecute(treeArray);
         TextView text = (TextView) activity.findViewById(R.id.content_label);
+        List<Tree> treeList = new ArrayList<>();
+        for (Tree tree : treeArray) {
+            treeList.add(tree);
+        }
+        List<Tree> res = CollectionConverter.ConvertTreeToList(treeList);
         text.setText("100");
     }
 }

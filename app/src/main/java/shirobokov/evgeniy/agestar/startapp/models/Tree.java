@@ -8,6 +8,7 @@ import java.util.List;
 public class Tree {
     private Long id;
     private String title;
+    private Long parentId;
     private List<Tree> subs;
 
     public Long getId() {
@@ -26,6 +27,14 @@ public class Tree {
         this.title = title;
     }
 
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
+
     public List<Tree> getSubs() {
         return subs;
     }
@@ -33,4 +42,5 @@ public class Tree {
     public void setSubs(List<Tree> subs) {
         this.subs = subs;
     }
+
 }
