@@ -35,10 +35,9 @@ public class MainActivity extends Activity {
 
         AndroidTreeView tView = new AndroidTreeView(this, root);
         tView.setDefaultAnimation(true);
-        tView.setDefaultContainerStyle(R.style.TreeNodeStyleDivided, true);
+        tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
 
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.menu_layout);
-
         layout.addView(tView.getView());
     }
 
@@ -47,7 +46,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
