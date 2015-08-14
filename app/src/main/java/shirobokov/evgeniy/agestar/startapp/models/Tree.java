@@ -16,10 +16,18 @@ public class Tree {
         this.subs = new ArrayList<>();
     }
 
+    public Tree(Long id, String title, Long parentId) {
+        this.id = id;
+        this.title = title;
+        this.parentId = parentId;
+        this.subs = new ArrayList<>();
+    }
+
 
     public Long getId() {
         return id;
     }
+
 
     public void setId(Long id) {
         this.id = id;

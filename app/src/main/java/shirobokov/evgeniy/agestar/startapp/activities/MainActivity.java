@@ -10,9 +10,6 @@ import android.widget.TextView;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +18,6 @@ import java.util.concurrent.ExecutionException;
 
 import shirobokov.evgeniy.agestar.startapp.R;
 import shirobokov.evgeniy.agestar.startapp.converters.ListToTreeConverter;
-import shirobokov.evgeniy.agestar.startapp.converters.TreeToListConverter;
 import shirobokov.evgeniy.agestar.startapp.models.Tree;
 import shirobokov.evgeniy.agestar.startapp.repository.SQLiteDatabaseHelper;
 import shirobokov.evgeniy.agestar.startapp.repository.TreeRepository;
@@ -60,11 +56,20 @@ public class MainActivity extends Activity {
             List<Tree> newTre = treeRepository.getTreeList();
             List<Tree> res = ListToTreeConverter.convert(newTre);
 
+            TreeNode root = TreeNode.root();
+            //TreeNode computerRoot = new TreeNode(new IconTreeItemHolder.TreeItem(1L, "Text", 10L));
 
-//            AndroidTreeView tView = new AndroidTreeView(this, root);
-//            tView.setDefaultAnimation(true);
-//            tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
-//            layout.addView(tView.getView());
+            List<TreeNode> tn = convert(newTre);
+
+
+            root.addChildren(tn);
+
+            AndroidTreeView tView = new AndroidTreeView(this, root);
+            tView.setDefaultAnimation(true);
+            tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
+            tView.setDefaultViewHolder(IconTreeItemHolder.class);
+
+            layout.addView(tView.getView());
 
 
             int i = 0;
@@ -98,4 +103,32 @@ public class MainActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    private static List<TreeNode> convert(List<Tree> treeList) {
+
+        Map<Long, TreeNode> lookup = new HashMap<>();
+        for (Tree tree : treeList) {
+            lookup.put(tree.getId(), new TreeNode(new IconTreeItemHolder.TreeItem(tree.getId(), tree.getTitle(), tree.getParentId())));
+        }
+        for (TreeNode tree : lookup.values()) {
+            TreeNode parent;
+
+            IconTreeItemHolder.TreeItem node = (IconTreeItemHolder.TreeItem) tree.getValue();
+            if (node.parentId != null) {
+                if (lookup.containsKey(node.parentId)) {
+                    parent = lookup.get(node.parentId);
+                    parent.addChild(tree);
+                }
+            }
+        }
+        List<TreeNode> res = new ArrayList<>();
+        for (TreeNode tree : lookup.values()) {
+            IconTreeItemHolder.TreeItem node = (IconTreeItemHolder.TreeItem) tree.getValue();
+            if (node.parentId == null) {
+                res.add(tree);
+            }
+        }
+        return res;
+    }
 }
+
