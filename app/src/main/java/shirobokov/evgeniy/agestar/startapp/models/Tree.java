@@ -1,5 +1,6 @@
 package shirobokov.evgeniy.agestar.startapp.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +11,11 @@ public class Tree {
     private String title;
     private Long parentId;
     private List<Tree> subs;
+
+    public Tree() {
+        this.subs = new ArrayList<>();
+    }
+
 
     public Long getId() {
         return id;
@@ -41,6 +47,10 @@ public class Tree {
 
     public void setSubs(List<Tree> subs) {
         this.subs = subs;
+    }
+
+    public void addSub(Tree tree) {
+        this.subs.add(tree);
     }
 
 }

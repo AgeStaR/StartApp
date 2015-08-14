@@ -14,11 +14,11 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import shirobokov.evgeniy.agestar.startapp.R;
-import shirobokov.evgeniy.agestar.startapp.converters.CollectionConverter;
+import shirobokov.evgeniy.agestar.startapp.converters.ListToTreeConverter;
+import shirobokov.evgeniy.agestar.startapp.converters.TreeToListConverter;
 import shirobokov.evgeniy.agestar.startapp.models.Tree;
 import shirobokov.evgeniy.agestar.startapp.repository.SQLiteDatabaseHelper;
 import shirobokov.evgeniy.agestar.startapp.repository.TreeRepository;
-import shirobokov.evgeniy.agestar.startapp.repository.tables.TreeTable;
 import shirobokov.evgeniy.agestar.startapp.rest.RestRequestTreeTask;
 
 public class MainActivity extends Activity {
@@ -57,13 +57,13 @@ public class MainActivity extends Activity {
         layout.addView(tView.getView());
 
         try {
-            String  str = TreeTable.CREATE_QUERY;
             List<Tree> treeList = new RestRequestTreeTask(this).execute().get();
-            List<Tree> res = CollectionConverter.convertTreeToList(treeList);
+            //List<Tree> res = TreeToListConverter.convert(treeList);
 
-            treeRepository.createTreeList(res);
+//            treeRepository.createTreeList(res);
 
             List<Tree> newTre = treeRepository.getTreeList();
+            List<Tree> res = ListToTreeConverter.convert(newTre);
             int i = 0;
             i++;
         } catch (InterruptedException e) {

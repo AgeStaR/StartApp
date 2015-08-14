@@ -35,7 +35,11 @@ public class TreeRepository {
                     Tree tree = new Tree();
                     tree.setId(c.getLong((c.getColumnIndex(TreeTable.ID))));
                     tree.setTitle((c.getString(c.getColumnIndex(TreeTable.TITLE))));
-                    tree.setParentId(c.getLong(c.getColumnIndex(TreeTable.PARENT_ID)));
+                    if (c.isNull(c.getColumnIndex(TreeTable.PARENT_ID))) {
+                        tree.setParentId(null);
+                    } else {
+                        tree.setParentId(c.getLong(c.getColumnIndex(TreeTable.PARENT_ID)));
+                    }
                     treeList.add(tree);
                 } while (c.moveToNext());
             }

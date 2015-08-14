@@ -13,7 +13,6 @@ import java.util.List;
 
 import shirobokov.evgeniy.agestar.startapp.R;
 import shirobokov.evgeniy.agestar.startapp.activities.MainActivity;
-import shirobokov.evgeniy.agestar.startapp.converters.CollectionConverter;
 import shirobokov.evgeniy.agestar.startapp.models.Tree;
 
 /**

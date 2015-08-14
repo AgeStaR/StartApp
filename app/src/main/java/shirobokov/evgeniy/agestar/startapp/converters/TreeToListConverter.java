@@ -9,12 +9,10 @@ import shirobokov.evgeniy.agestar.startapp.models.Tree;
 /**
  * Created by Евгений on 13.08.2015.
  */
-public class CollectionConverter {
+public class TreeToListConverter {
     private static Long MIN_UNUSED_ID = 1L;
-
     private static HashSet<Long> usedIDs;
     private static List<Tree> result;
-
 
     private static void setUsedIDs(List<Tree> treeList) {
         for (Tree tree : treeList) {
@@ -53,13 +51,11 @@ public class CollectionConverter {
     }
 
 
-    public static List<Tree> convertTreeToList(List<Tree> treeList) {
+    public static List<Tree> convert(List<Tree> treeList) {
         usedIDs = new HashSet<>();
         result = new ArrayList<>();
-
         setUsedIDs(treeList);
         convertToList(treeList, null);
-
         return result;
     }
 }
