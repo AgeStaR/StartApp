@@ -33,16 +33,5 @@ public class ListToTreeConverter {
             }
         }
         return res;
-
-
-//        treeList.ForEach(x => lookup.Add(x.ID, new Node { AssociatedObject = x }));
-////        foreach (var item in lookup.Values) {
-////            Node proposedParent;
-////            if (lookup.TryGetValue(item.AssociatedObject.ParentID, out proposedParent)) {
-////                item.Parent = proposedParent;
-////                proposedParent.Children.Add(item);
-////            }
-////        }
-//        return lookup.Values.Where(x => x.Parent == null);
     }
 }

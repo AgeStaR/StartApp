@@ -10,7 +10,13 @@ import android.widget.TextView;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import shirobokov.evgeniy.agestar.startapp.R;
@@ -25,6 +31,7 @@ public class MainActivity extends Activity {
 
     private SQLiteDatabaseHelper db;
     private TreeRepository treeRepository;
+    private List<TreeNode> treeNodeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,20 +48,8 @@ public class MainActivity extends Activity {
         TextView text = (TextView) findViewById(R.id.content_label);
         text.setText("50");
 
-        TreeNode root = TreeNode.root();
-        TreeNode parent = new TreeNode("MyParentNode");
-        TreeNode child0 = new TreeNode("ChildNode0");
-        TreeNode child1 = new TreeNode("ChildNode1");
-
-        parent.addChildren(child0, child1);
-        root.addChild(parent);
-
-        AndroidTreeView tView = new AndroidTreeView(this, root);
-        tView.setDefaultAnimation(true);
-        tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
-
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.menu_layout);
-        layout.addView(tView.getView());
+
 
         try {
             List<Tree> treeList = new RestRequestTreeTask(this).execute().get();
@@ -64,6 +59,14 @@ public class MainActivity extends Activity {
 
             List<Tree> newTre = treeRepository.getTreeList();
             List<Tree> res = ListToTreeConverter.convert(newTre);
+
+
+//            AndroidTreeView tView = new AndroidTreeView(this, root);
+//            tView.setDefaultAnimation(true);
+//            tView.setDefaultContainerStyle(R.style.TreeNodeStyleCustom);
+//            layout.addView(tView.getView());
+
+
             int i = 0;
             i++;
         } catch (InterruptedException e) {
