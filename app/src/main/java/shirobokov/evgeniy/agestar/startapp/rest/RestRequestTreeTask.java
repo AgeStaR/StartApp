@@ -19,7 +19,7 @@ import shirobokov.evgeniy.agestar.startapp.models.Tree;
 /**
  * Created by Евгений on 12.08.2015.
  */
-public class RestRequestTreeTask extends AsyncTask<Void, Void, Tree[]> {
+public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
 
     private final static String URL_RESOURCE = "https://money.yandex.ru/api/categories-list";
 
@@ -35,13 +35,17 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, Tree[]> {
     }
 
     @Override
-    protected Tree[] doInBackground(Void... params) {
+    protected List<Tree> doInBackground(Void... params) {
         try {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-            ResponseEntity<Tree[]> responseEntity = restTemplate.getForEntity(URL_RESOURCE, Tree[].class);
-            Tree[] tree = responseEntity.getBody();
-            return tree;
+            ResponseEntity<Tree[]> treeArrayEntity = restTemplate.getForEntity(URL_RESOURCE, Tree[].class);
+            Tree[] treeArray = treeArrayEntity.getBody();
+            List<Tree> treeList = new ArrayList<>();
+            for (Tree tree : treeArray) {
+                treeList.add(tree);
+            }
+            return treeList;
         } catch (Exception e) {
             Log.e("MainActivity", e.getMessage(), e);
         }
@@ -49,14 +53,9 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, Tree[]> {
     }
 
     @Override
-    protected void onPostExecute(Tree[] treeArray) {
+    protected void onPostExecute(List<Tree> treeArray) {
         super.onPostExecute(treeArray);
         TextView text = (TextView) activity.findViewById(R.id.content_label);
-        List<Tree> treeList = new ArrayList<>();
-        for (Tree tree : treeArray) {
-            treeList.add(tree);
-        }
-        List<Tree> res = CollectionConverter.ConvertTreeToList(treeList);
         text.setText("100");
     }
 }

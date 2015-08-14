@@ -16,20 +16,20 @@ public class CollectionConverter {
     private static List<Tree> result;
 
 
-    private static void SetUsedIDs(List<Tree> treeList) {
+    private static void setUsedIDs(List<Tree> treeList) {
         for (Tree tree : treeList) {
             if (tree.getId() != null) {
                 usedIDs.add(tree.getId());
             }
             if (tree.getSubs() != null) {
                 if (!tree.getSubs().isEmpty()) {
-                    SetUsedIDs(tree.getSubs());
+                    setUsedIDs(tree.getSubs());
                 }
             }
         }
     }
 
-    private static void ConvertToList(List<Tree> treeList, Tree parent) {
+    private static void convertToList(List<Tree> treeList, Tree parent) {
         for (Tree tree : treeList) {
             if (tree.getId() == null) {
                 while (usedIDs.contains(MIN_UNUSED_ID)) {
@@ -46,19 +46,19 @@ public class CollectionConverter {
             result.add(tree);
             if (tree.getSubs() != null) {
                 if (!tree.getSubs().isEmpty()) {
-                    ConvertToList(tree.getSubs(), tree);
+                    convertToList(tree.getSubs(), tree);
                 }
             }
         }
     }
 
 
-    public static List<Tree> ConvertTreeToList(List<Tree> treeList) {
+    public static List<Tree> convertTreeToList(List<Tree> treeList) {
         usedIDs = new HashSet<>();
         result = new ArrayList<>();
 
-        SetUsedIDs(treeList);
-        ConvertToList(treeList, null);
+        setUsedIDs(treeList);
+        convertToList(treeList, null);
 
         return result;
     }
