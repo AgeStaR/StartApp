@@ -25,12 +25,11 @@ public class TreeRepository {
     public List<Tree> getTreeList() {
         try {
             SQLiteDatabase database = db.getReadableDatabase();
-            String selectQuery = "SELECT  * FROM " + TreeTable.TABLE_NAME;
+            String selectQuery = "SELECT * FROM " + TreeTable.TABLE_NAME;
             List<Tree> treeList = new ArrayList<>();
 
             Cursor c = database.rawQuery(selectQuery, null);
 
-            // looping through all rows and adding to list
             if (c.moveToFirst()) {
                 do {
                     Tree tree = new Tree();

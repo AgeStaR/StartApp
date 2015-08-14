@@ -18,6 +18,7 @@ import shirobokov.evgeniy.agestar.startapp.converters.CollectionConverter;
 import shirobokov.evgeniy.agestar.startapp.models.Tree;
 import shirobokov.evgeniy.agestar.startapp.repository.SQLiteDatabaseHelper;
 import shirobokov.evgeniy.agestar.startapp.repository.TreeRepository;
+import shirobokov.evgeniy.agestar.startapp.repository.tables.TreeTable;
 import shirobokov.evgeniy.agestar.startapp.rest.RestRequestTreeTask;
 
 public class MainActivity extends Activity {
@@ -56,6 +57,7 @@ public class MainActivity extends Activity {
         layout.addView(tView.getView());
 
         try {
+            String  str = TreeTable.CREATE_QUERY;
             List<Tree> treeList = new RestRequestTreeTask(this).execute().get();
             List<Tree> res = CollectionConverter.convertTreeToList(treeList);
 
@@ -69,7 +71,6 @@ public class MainActivity extends Activity {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
     }
 
 
