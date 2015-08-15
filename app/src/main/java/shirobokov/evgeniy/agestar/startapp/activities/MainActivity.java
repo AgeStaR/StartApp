@@ -74,8 +74,7 @@ public class MainActivity extends Activity {
         try {
             if (id == R.id.action_refresh) {
                 treeRepository.deleteAll();
-                List<Tree> treeList = null;
-                treeList = new RestRequestTreeTask(this).execute().get();
+                List<Tree> treeList = new RestRequestTreeTask(this).execute().get();
                 treeRepository.createTreeList(TreeToListConverter.convert(treeList));
                 treeList = treeRepository.getTreeList();
                 AddTreeView(treeList);
