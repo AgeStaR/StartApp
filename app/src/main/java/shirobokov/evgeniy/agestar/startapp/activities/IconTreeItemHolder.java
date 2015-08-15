@@ -33,10 +33,9 @@ public class IconTreeItemHolder extends TreeNode.BaseNodeViewHolder<IconTreeItem
 
         arrowView = (PrintView) view.findViewById(R.id.arrow_icon);
 
-        //if My computer
-//        if (node.getLevel() == 1) {
-//            view.findViewById(R.id.btn_delete).setVisibility(View.GONE);
-//        }
+        if (node.getChildren().isEmpty()) {
+            view.findViewById(R.id.arrow_icon).setVisibility(View.INVISIBLE);
+        }
 
         return view;
     }

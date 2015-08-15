@@ -10,14 +10,12 @@ import android.widget.TextView;
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import shirobokov.evgeniy.agestar.startapp.R;
 import shirobokov.evgeniy.agestar.startapp.converters.ListToTreeConverter;
+import shirobokov.evgeniy.agestar.startapp.converters.ListToTreeNodeConverter;
 import shirobokov.evgeniy.agestar.startapp.models.Tree;
 import shirobokov.evgeniy.agestar.startapp.repository.SQLiteDatabaseHelper;
 import shirobokov.evgeniy.agestar.startapp.repository.TreeRepository;
@@ -27,7 +25,6 @@ public class MainActivity extends Activity {
 
     private SQLiteDatabaseHelper db;
     private TreeRepository treeRepository;
-    private List<TreeNode> treeNodeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +43,6 @@ public class MainActivity extends Activity {
 
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.menu_layout);
 
-
         try {
             List<Tree> treeList = new RestRequestTreeTask(this).execute().get();
             //List<Tree> res = TreeToListConverter.convert(treeList);
@@ -59,10 +55,10 @@ public class MainActivity extends Activity {
             TreeNode root = TreeNode.root();
             //TreeNode computerRoot = new TreeNode(new IconTreeItemHolder.TreeItem(1L, "Text", 10L));
 
-            List<TreeNode> tn = convert(newTre);
+            List<TreeNode> convertedTreeNodes = ListToTreeNodeConverter.convert(newTre);
 
 
-            root.addChildren(tn);
+            root.addChildren(convertedTreeNodes);
 
             AndroidTreeView tView = new AndroidTreeView(this, root);
             tView.setDefaultAnimation(true);
@@ -70,7 +66,6 @@ public class MainActivity extends Activity {
             tView.setDefaultViewHolder(IconTreeItemHolder.class);
 
             layout.addView(tView.getView());
-
 
             int i = 0;
             i++;
@@ -89,6 +84,7 @@ public class MainActivity extends Activity {
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -102,33 +98,6 @@ public class MainActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private static List<TreeNode> convert(List<Tree> treeList) {
-
-        Map<Long, TreeNode> lookup = new HashMap<>();
-        for (Tree tree : treeList) {
-            lookup.put(tree.getId(), new TreeNode(new IconTreeItemHolder.TreeItem(tree.getId(), tree.getTitle(), tree.getParentId())));
-        }
-        for (TreeNode tree : lookup.values()) {
-            TreeNode parent;
-
-            IconTreeItemHolder.TreeItem node = (IconTreeItemHolder.TreeItem) tree.getValue();
-            if (node.parentId != null) {
-                if (lookup.containsKey(node.parentId)) {
-                    parent = lookup.get(node.parentId);
-                    parent.addChild(tree);
-                }
-            }
-        }
-        List<TreeNode> res = new ArrayList<>();
-        for (TreeNode tree : lookup.values()) {
-            IconTreeItemHolder.TreeItem node = (IconTreeItemHolder.TreeItem) tree.getValue();
-            if (node.parentId == null) {
-                res.add(tree);
-            }
-        }
-        return res;
     }
 }
 

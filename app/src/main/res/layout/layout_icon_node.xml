@@ -19,19 +19,6 @@
         app:iconSize="20dp"
         app:iconText="@string/ic_keyboard_arrow_right" />
 
-    <com.github.johnkil.print.PrintView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignWithParentIfMissing="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/arrow_icon"
-        app:iconColor="#12558C"
-        app:iconFont="fonts/material-icon-font.ttf"
-        app:iconSize="24dp"
-        app:iconText="@string/ic_email" />
-
     <TextView
         android:id="@+id/node_value"
         android:layout_width="wrap_content"
@@ -39,7 +26,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_toLeftOf="@+id/buttonsContainer"
-        android:layout_toRightOf="@+id/icon"
+        android:layout_toRightOf="@+id/arrow_icon"
         android:textSize="16sp" />
 
 
