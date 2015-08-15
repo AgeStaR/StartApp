@@ -3,6 +3,7 @@ package shirobokov.evgeniy.agestar.startapp.repository;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
@@ -78,6 +79,18 @@ public class TreeRepository {
             }
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteAll() {
+        try {
+            SQLiteDatabase database = db.getWritableDatabase();
+            String deleteQuery = "DELETE FROM " + TreeTable.TABLE_NAME;
+            database.execSQL(deleteQuery);
+            return true;
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }

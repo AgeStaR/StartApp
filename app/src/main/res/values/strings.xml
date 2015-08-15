@@ -2,7 +2,8 @@
     <string name="app_name">StartApp</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="selected">Выбрано:</string>
+    <string name="action_refresh">Обновить</string>
     <string name="ic_access_alarms">&#xe000;</string>
     <string name="ic_access_time">&#xe001;</string>
     <string name="ic_accessibility">&#xe002;</string>

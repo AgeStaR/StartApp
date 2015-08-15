@@ -54,6 +54,7 @@ public class TreeToListConverter {
     public static List<Tree> convert(List<Tree> treeList) {
         usedIDs = new HashSet<>();
         result = new ArrayList<>();
+        MIN_UNUSED_ID = 1L;
         setUsedIDs(treeList);
         convertToList(treeList, null);
         return result;

@@ -10,14 +10,23 @@
 
     <TextView
         android:id="@+id/content_label"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="not" />
+        android:text="@string/selected"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/selected_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/content_label"
+        android:text=""
+        android:textSize="18sp" />
 
     <RelativeLayout
         android:id="@+id/menu_layout"
-        android:layout_below="@id/content_label"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </RelativeLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@id/content_label"></RelativeLayout>
 </RelativeLayout>

@@ -54,7 +54,7 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
     @Override
     protected void onPostExecute(List<Tree> treeArray) {
         super.onPostExecute(treeArray);
-        TextView text = (TextView) activity.findViewById(R.id.content_label);
-        text.setText("100");
+//        TextView text = (TextView) activity.findViewById(R.id.content_label);
+//        text.setText("100");
     }
 }
