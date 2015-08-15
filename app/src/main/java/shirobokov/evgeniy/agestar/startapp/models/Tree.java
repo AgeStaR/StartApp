@@ -9,6 +9,7 @@ import java.util.List;
 public class Tree {
     private Long id;
     private String title;
+    private Long order;
     private Long parentId;
     private List<Tree> subs;
 
@@ -16,9 +17,10 @@ public class Tree {
         this.subs = new ArrayList<>();
     }
 
-    public Tree(Long id, String title, Long parentId) {
+    public Tree(Long id, String title, Long order, Long parentId) {
         this.id = id;
         this.title = title;
+        this.order = order;
         this.parentId = parentId;
         this.subs = new ArrayList<>();
     }
@@ -59,4 +61,11 @@ public class Tree {
         this.subs.add(tree);
     }
 
+    public Long getOrder() {
+        return order;
+    }
+
+    public void setOrder(Long order) {
+        this.order = order;
+    }
 }

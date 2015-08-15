@@ -26,7 +26,7 @@ public class TreeRepository {
     public List<Tree> getTreeList() {
         try {
             SQLiteDatabase database = db.getReadableDatabase();
-            String selectQuery = "SELECT * FROM " + TreeTable.TABLE_NAME;
+            String selectQuery = "SELECT * FROM "+ TreeTable.TABLE_NAME + " ORDER BY " + TreeTable.ORDER+" ASC;";
             List<Tree> treeList = new ArrayList<>();
 
             Cursor c = database.rawQuery(selectQuery, null);
@@ -36,6 +36,7 @@ public class TreeRepository {
                     Tree tree = new Tree();
                     tree.setId(c.getLong((c.getColumnIndex(TreeTable.ID))));
                     tree.setTitle((c.getString(c.getColumnIndex(TreeTable.TITLE))));
+                    tree.setOrder((c.getLong(c.getColumnIndex(TreeTable.ORDER))));
                     if (c.isNull(c.getColumnIndex(TreeTable.PARENT_ID))) {
                         tree.setParentId(null);
                     } else {
@@ -58,6 +59,7 @@ public class TreeRepository {
             ContentValues values = new ContentValues();
             values.put(TreeTable.ID, tree.getId());
             values.put(TreeTable.TITLE, tree.getTitle());
+            values.put(TreeTable.ORDER, tree.getOrder());
             values.put(TreeTable.PARENT_ID, tree.getParentId());
             database.insert(TreeTable.TABLE_NAME, null, values);
             return true;
@@ -74,6 +76,7 @@ public class TreeRepository {
                 ContentValues values = new ContentValues();
                 values.put(TreeTable.ID, tree.getId());
                 values.put(TreeTable.TITLE, tree.getTitle());
+                values.put(TreeTable.ORDER, tree.getOrder());
                 values.put(TreeTable.PARENT_ID, tree.getParentId());
                 database.insert(TreeTable.TABLE_NAME, null, values);
             }

@@ -48,11 +48,14 @@ public class IconTreeItemHolder extends TreeNode.BaseNodeViewHolder<IconTreeItem
     public static class TreeItem {
         public Long id;
         public String title;
+        public Long order;
         public Long parentId;
 
-        public TreeItem(Long id, String title, Long parentId) {
+
+        public TreeItem(Long id, String title, Long order, Long parentId) {
             this.id = id;
             this.title = title;
+            this.order = order;
             this.parentId = parentId;
         }
     }

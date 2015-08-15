@@ -1,13 +1,16 @@
 package shirobokov.evgeniy.agestar.startapp.activities;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.unnamed.b.atv.model.TreeNode;
 import com.unnamed.b.atv.view.AndroidTreeView;
@@ -47,6 +50,9 @@ public class MainActivity extends Activity {
             List<Tree> treeList = treeRepository.getTreeList();
             if (treeList.isEmpty()) {
                 treeList = new RestRequestTreeTask(this).execute().get();
+                if (treeList == null) {
+                    throw new Exception("Ресурс не найден.");
+                }
                 treeRepository.createTreeList(TreeToListConverter.convert(treeList));
                 treeList = treeRepository.getTreeList();
             }
@@ -56,7 +62,10 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            Message.message(this, "Ошибка: " + e.getMessage());
         }
+
     }
 
 
@@ -73,11 +82,15 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
         try {
             if (id == R.id.action_refresh) {
-                treeRepository.deleteAll();
                 List<Tree> treeList = new RestRequestTreeTask(this).execute().get();
+                if (treeList == null) {
+                    throw new Exception("Ресурс не найден.");
+                }
+                treeRepository.deleteAll();
                 treeRepository.createTreeList(TreeToListConverter.convert(treeList));
                 treeList = treeRepository.getTreeList();
                 AddTreeView(treeList);
+                Message.message(this, "Обновлено");
                 return true;
             }
 
@@ -85,8 +98,10 @@ public class MainActivity extends Activity {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Message.message(this, "Ошибка: " + e.getMessage());
         }
-
 
         return super.onOptionsItemSelected(item);
     }
@@ -111,7 +126,6 @@ public class MainActivity extends Activity {
         }
 
         layout.addView(this.treeView);
-
     }
 
     private TreeNode.TreeNodeClickListener nodeClickListener = new TreeNode.TreeNodeClickListener() {
@@ -122,5 +136,10 @@ public class MainActivity extends Activity {
         }
     };
 
+    public static class Message {
+        public static void message(Context context, String message) {
+            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+        }
+    }
 }
 

@@ -34,7 +34,7 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
     }
 
     @Override
-    protected List<Tree> doInBackground(Void... params) {
+    protected List<Tree> doInBackground(Void... params){
         try {
             RestTemplate restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
