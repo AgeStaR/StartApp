@@ -5,9 +5,11 @@ import android.util.Log;
 import android.widget.TextView;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +23,7 @@ import shirobokov.evgeniy.agestar.startapp.models.Tree;
 public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
 
     private final static String URL_RESOURCE = "https://money.yandex.ru/api/categories-list";
-
+    private final static Integer TIMEOUT = 10;
     private MainActivity activity;
 
     public RestRequestTreeTask(MainActivity activity) {
@@ -34,9 +36,13 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
     }
 
     @Override
-    protected List<Tree> doInBackground(Void... params){
+    protected List<Tree> doInBackground(Void... params) {
         try {
-            RestTemplate restTemplate = new RestTemplate();
+            SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+            factory.setConnectTimeout(TIMEOUT);
+            factory.setReadTimeout(TIMEOUT);
+            RestTemplate restTemplate = new RestTemplate(factory);
+            restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<Tree[]> treeArrayEntity = restTemplate.getForEntity(URL_RESOURCE, Tree[].class);
             Tree[] treeArray = treeArrayEntity.getBody();
@@ -54,7 +60,5 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
     @Override
     protected void onPostExecute(List<Tree> treeArray) {
         super.onPostExecute(treeArray);
-//        TextView text = (TextView) activity.findViewById(R.id.content_label);
-//        text.setText("100");
     }
 }
