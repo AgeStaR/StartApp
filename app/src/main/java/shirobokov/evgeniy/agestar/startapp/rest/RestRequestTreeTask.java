@@ -23,7 +23,7 @@ import shirobokov.evgeniy.agestar.startapp.models.Tree;
 public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
 
     private final static String URL_RESOURCE = "https://money.yandex.ru/api/categories-list";
-    private final static Integer TIMEOUT = 10;
+    private final static Integer TIMEOUT = 1500;
     private MainActivity activity;
 
     public RestRequestTreeTask(MainActivity activity) {
@@ -42,7 +42,6 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
             factory.setConnectTimeout(TIMEOUT);
             factory.setReadTimeout(TIMEOUT);
             RestTemplate restTemplate = new RestTemplate(factory);
-            restTemplate = new RestTemplate();
             restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
             ResponseEntity<Tree[]> treeArrayEntity = restTemplate.getForEntity(URL_RESOURCE, Tree[].class);
             Tree[] treeArray = treeArrayEntity.getBody();
