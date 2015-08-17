@@ -2,8 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingTop="16dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MainActivity">
 
     <TextView
@@ -29,15 +29,11 @@
         android:layout_below="@id/content_label"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:background="#444">
-    </TableRow>
+        android:background="#444"></TableRow>
 
     <RelativeLayout
         android:id="@+id/menu_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/hr">
-    </RelativeLayout>
-
-
+        android:layout_below="@id/hr"></RelativeLayout>
 </RelativeLayout>
