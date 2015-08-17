@@ -14,7 +14,7 @@ import shirobokov.evgeniy.agestar.startapp.repository.tables.TreeTable;
  */
 public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     final static int database_version = 1;
-    final static String DATABASE_NAME = "evgeniy.shirobokov1.db";
+    final static String DATABASE_NAME = "evgeniy.shirobokov4.db";
     private Context context;
 
     public SQLiteDatabaseHelper(Context context) {

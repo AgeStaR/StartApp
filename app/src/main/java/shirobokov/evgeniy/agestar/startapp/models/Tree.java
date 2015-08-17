@@ -68,4 +68,14 @@ public class Tree {
     public void setOrder(Long order) {
         this.order = order;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Tree tree = (Tree) o;
+        if (tree.getId() == getId() && tree.getTitle().equals(getTitle()) && tree.getParentId() == getParentId() && tree.getOrder() == getOrder() && tree.getSubs().size() == getSubs().size()) {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -3,7 +3,6 @@ package shirobokov.evgeniy.agestar.startapp.activities;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -49,8 +48,10 @@ public class MainActivity extends Activity {
         try {
             List<Tree> treeList = treeRepository.getTreeList();
             if (treeList.isEmpty()) {
-                treeList = new RestRequestTreeTask(this).execute().get();
-                if (treeList == null) {
+
+                RestRequestTreeTask requestTask = new RestRequestTreeTask();
+                treeList = requestTask.execute().get();
+                if (requestTask.getException() != null) {
                     throw new Exception("Ресурс не найден.");
                 }
                 treeRepository.createTreeList(TreeToListConverter.convert(treeList));
@@ -71,19 +72,18 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         try {
             if (id == R.id.action_refresh) {
-                List<Tree> treeList = new RestRequestTreeTask(this).execute().get();
-                if (treeList == null) {
+                RestRequestTreeTask requestTask = new RestRequestTreeTask();
+                List<Tree> treeList = requestTask.execute().get();
+                if (requestTask.getException() != null) {
                     throw new Exception("Ресурс не найден.");
                 }
                 treeRepository.deleteAll();
@@ -93,7 +93,6 @@ public class MainActivity extends Activity {
                 Message.message(this, "Обновлено");
                 return true;
             }
-
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {

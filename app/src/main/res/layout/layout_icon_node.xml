@@ -29,7 +29,6 @@
         android:layout_toRightOf="@+id/arrow_icon"
         android:textSize="16sp" />
 
-
     <LinearLayout
         android:id="@+id/buttonsContainer"
         android:layout_width="wrap_content"

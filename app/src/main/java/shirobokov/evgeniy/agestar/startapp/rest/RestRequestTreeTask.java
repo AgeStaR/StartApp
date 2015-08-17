@@ -7,6 +7,7 @@ import android.widget.TextView;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.sql.Time;
@@ -24,15 +25,12 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
 
     private final static String URL_RESOURCE = "https://money.yandex.ru/api/categories-list";
     private final static Integer TIMEOUT = 1500;
-    private MainActivity activity;
-
-    public RestRequestTreeTask(MainActivity activity) {
-        this.activity = activity;
-    }
+    private Exception error;
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        this.error = null;
     }
 
     @Override
@@ -51,9 +49,14 @@ public class RestRequestTreeTask extends AsyncTask<Void, Void, List<Tree>> {
             }
             return treeList;
         } catch (Exception e) {
-            Log.e("MainActivity", e.getMessage(), e);
+            e.printStackTrace();
+            this.error = e;
+            return null;
         }
-        return null;
+    }
+
+    public Exception getException() {
+        return this.error;
     }
 
     @Override
